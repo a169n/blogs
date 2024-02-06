@@ -12,46 +12,70 @@ const { connectDB } = require("./config/db");
 connectDB();
 
 app.get("/blogs", async (req, res) => {
-  const blogs = await Blogs.find({});
-  res.status(200).json(blogs);
+  try {
+    const blogs = await Blogs.find({});
+    res.status(200).json(blogs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 app.get("/blogs/:blogId", async (req, res) => {
-  const blogId = req.params.blogId;
-  const blog = await Blogs.findById(blogId);
-  if (!blog) {
-    return res.status(404).json({ message: "Blog not found" });
+  try {
+    const blogId = req.params.blogId;
+    const blog = await Blogs.findById(blogId);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-  res.status(200).json(blog)
 });
 
 app.post("/blogs", async (req, res) => {
-  const blogData = req.body;
-  const newBlog = await Blogs.create(blogData);
-  res.status(201).json(newBlog);
+  try {
+    const blogData = req.body;
+    const newBlog = await Blogs.create(blogData);
+    res.status(201).json(newBlog);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 app.put("/blogs/:id", async (req, res) => {
-  const updatedBlog = await Blogs.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  if (!updatedBlog) {
-    return res.status(404).json({ message: "Blog not found" });
+  try {
+    const updatedBlog = await Blogs.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!updatedBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    res.status(200).json(updatedBlog);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
-  res.status(200).json(updatedBlog);
 });
 
 app.delete("/blogs/:id", async (req, res) => {
-  const deletedBlog = await Blogs.findByIdAndDelete(req.params.id);
-  if (!deletedBlog) {
-    return res.status(404).json({ message: "Blog not found" });
+  try {
+    const deletedBlog = await Blogs.findByIdAndDelete(req.params.id);
+    if (!deletedBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    res.status(200).json({ message: "Blog deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-  res.status(200).json({ message: "Blog deleted successfully" });
 });
 
 app.delete("/blogs", async (req, res) => {
-  await Blogs.deleteMany({});
-  res.status(200).json({ message: "All data cleared successfully" });
+  try {
+    await Blogs.deleteMany({});
+    res.status(200).json({ message: "All data cleared successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 const port = process.env.PORT || 3000;
