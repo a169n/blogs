@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog App</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./pictures/blog-free.png" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- Google fonts(Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Blog App</h1>
+
+    <form id="createBlogForm">
+      <label for="title">Title:</label><br />
+      <input type="text" id="title" name="title" required /><br />
+      <label for="body">Body:</label><br />
+      <textarea id="body" name="body" required></textarea><br />
+      <label for="author">Author:</label><br />
+      <input type="text" id="author" name="author" required /><br /><br />
+      <button type="submit">Create Blog</button>
+    </form>
+
+    <div id="blogsContainer"></div>
+
+    <script src="./js/script.js"></script>
+  </body>
+</html>

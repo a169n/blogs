@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
+app.use(express.static("public"));
 
 require("dotenv").config();
 
@@ -10,6 +11,10 @@ const Blogs = require("./models/blogsSchema");
 const { connectDB } = require("./config/db");
 
 connectDB();
+
+app.get("/", (req, res) => {
+  res.status(200).sendFile("index.html")
+})
 
 app.get("/blogs", async (req, res) => {
   try {
